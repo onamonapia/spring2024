@@ -30,7 +30,7 @@
       </div>
 
       <div data-role="footer">
-                <!-- TO DO!!! -->
+                <p>Miriam Rundell, Spring 2024</p>
       </div>
 
     </div>
@@ -47,11 +47,54 @@
         </div>
         <h1>Add a song</h1>
       </div>
+
       <div data-role="content">
-        <!-- TO DO!!! -->
+        <!-- need title, artist, language, youtube link, genre, date listened to, linked from, keywords -->
+        <!-- javascript will decide if the majority of these are required -->
+        <div class="input">
+          <label for="songName">Song Name:</label>
+          <input type="text" id="songName" name="songName"><br>
+        </div>
+        <div class="artist">
+          <label for="artistName">Artist:</label>
+          <input type="text" id="artistName" name="artistName"><br>
+        </div>
+        <!-- In the future, I may decide to make this a drop-down using Javascript if I can find a list of languages. -->
+        <!-- or maybe not because that drop-down menu would be really long and obnoxious to sort through. will see -->
+        <div class="language">
+          <label for="songLanguage">Language:</label>
+          <input type="text" id="songLanguage" name="songLanguage"><br>
+        </div>
+
+        <!-- Always required -->
+        <div class="link">
+          <label for="songLink">Youtube Link:</label>
+          <input type="url" id="songLink" name="songLink" required><br>
+        </div>
+        <div class="date">
+          <label for="dateListened">Date:</label>
+          <input type="date" id="dateListened" name="dateListened" required><br>
+        </div>
+
+        <div class="linked">
+          <label for="linkedFrom">Linked from:</label>
+          <input type="url" id="linkedFrom" name="linkedFrom"><br>
+        </div>
+
+        <!-- never required -->
+        <div class="genre">
+          <label for="songGenre">Genre:</label>
+          <input type="text" id="songGenre" name="songGenre"><br>
+        </div>
+        <div class="keywords">
+          <label for="keywordList">Keywords (separated by commas):</label>
+          <input type="text" id="keywordList" name="keywordList"><br>
+        </div>
+
+
       </div>
       <div data-role="footer">
-        <!-- TO DO!!! -->
+        <p>Miriam Rundell, Spring 2024</p>
       </div>
     </div>
   
@@ -71,7 +114,7 @@
         <!-- TO DO!!! -->
       </div>
       <div data-role="footer">
-        <!-- TO DO!!! -->
+        <p>Miriam Rundell, Spring 2024</p>
       </div>
     </div>
 
@@ -91,7 +134,7 @@
         <!-- TO DO!!! -->
       </div>
       <div data-role="footer">
-        <!-- TO DO!!! -->
+        <p>Miriam Rundell, Spring 2024</p>
       </div>
     </div>
 
