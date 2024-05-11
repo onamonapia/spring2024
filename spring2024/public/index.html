@@ -12,6 +12,8 @@
   </head>
   <body>
 
+
+    <!-- HOME PAGE -->
     <div data-role="page" id="home">
       <div data-role="header">
         <div data-role="navbar">
@@ -35,6 +37,8 @@
 
     </div>
 
+
+    <!-- ADD A SONG  -->
     <div data-role="page" id="add">
       <div data-role="header">
         <div data-role="navbar">
@@ -55,41 +59,43 @@
           <label for="songName">Song Name:</label>
           <input type="text" id="songName" name="songName"><br>
         </div>
-        <div class="artist">
+        <div class="input">
           <label for="artistName">Artist:</label>
           <input type="text" id="artistName" name="artistName"><br>
         </div>
         <!-- In the future, I may decide to make this a drop-down using Javascript if I can find a list of languages. -->
         <!-- or maybe not because that drop-down menu would be really long and obnoxious to sort through. will see -->
-        <div class="language">
+        <div class="input">
           <label for="songLanguage">Language:</label>
           <input type="text" id="songLanguage" name="songLanguage"><br>
         </div>
 
         <!-- Always required -->
-        <div class="link">
+        <div class="input">
           <label for="songLink">Youtube Link:</label>
           <input type="url" id="songLink" name="songLink" required><br>
         </div>
-        <div class="date">
+        <div class="input">
           <label for="dateListened">Date:</label>
           <input type="date" id="dateListened" name="dateListened" required><br>
         </div>
 
-        <div class="linked">
+        <div class="input">
           <label for="linkedFrom">Linked from:</label>
           <input type="url" id="linkedFrom" name="linkedFrom"><br>
         </div>
 
         <!-- never required -->
-        <div class="genre">
+        <div class="input">
           <label for="songGenre">Genre:</label>
           <input type="text" id="songGenre" name="songGenre"><br>
         </div>
-        <div class="keywords">
+        <div class="input">
           <label for="keywordList">Keywords (separated by commas):</label>
           <input type="text" id="keywordList" name="keywordList"><br>
         </div>
+
+        <button id="enter" type="button">Enter</button>
 
 
       </div>
@@ -98,6 +104,8 @@
       </div>
     </div>
   
+
+    <!-- SHOW ALL SONGS -->
     <div data-role="page" id="show">
       <div data-role="header">
         <div data-role="navbar">
@@ -118,6 +126,8 @@
       </div>
     </div>
 
+
+    <!-- FIND SONGS -->
     <div data-role="page" id="find">
       <div data-role="header">
         <div data-role="navbar">
@@ -131,7 +141,42 @@
         <h1>Find a song</h1>
       </div>
       <div data-role="content">
-        <!-- TO DO!!! -->
+        <!-- will need a submit button for every field -->
+        <!-- language, link, date (approximate, so probably just month+year), genre, keywords -->
+        <!-- (totally forgot the last two in homework 4) -->
+        <!-- may add artist as well? will ponder -->
+        <div class="findLang">
+          <label for="findLanguage">Language:</label>
+          <input type="text" id="findLanguage" name="findLanguage">
+          <button id="languageEnter" type="button">Enter Language</button>
+        </div>
+        <div class="findLinked">
+          <label for="findLink">Linked Song (songs listened to around the same period):</label>
+          <input type="url" id="findLink" name="findLink">
+          <button id="linkedEnter" type="button">Enter Linked Song</button>
+        </div>
+        <!-- will not be a date input due to only having approximations -->
+        <div class="findD">
+          <label for="findDate">Approximate Date:</label>
+          <input type="text" id="findDate" name="findDate">
+          <button id="dateEnter" type="button">Enter Date</button>
+        </div>
+        <div class="findG">
+          <label for="findGenre">Genre:</label>
+          <input type="text" id="findGenre" name="findGenre">
+          <button id="genreEnter" type="button">Enter Genre</button>
+        </div>
+        <div class="findK">
+          <label for="findKeywords">Keywords:</label>
+          <input type="text" id="findKeywords" name="findKeywords">
+          <button id="keywordEnter" type="button">Enter Keyword</button>
+        </div>
+
+        <!-- Will display once they are entered. -->
+        <div id="possibleSongs">
+          <ul id="possibleList"></ul>
+        </div>
+        
       </div>
       <div data-role="footer">
         <p>Miriam Rundell, Spring 2024</p>
