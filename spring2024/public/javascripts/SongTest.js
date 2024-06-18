@@ -5,3 +5,5 @@ newSong2.setTitleAndArtist("a", "b");
 
 console.log(newSong.sameSong(newSong2));
 console.log(newSong.sameSong2("a", "b"));
+
+newSong.addGenre("bluh, bluh2");

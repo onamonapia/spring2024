@@ -8,12 +8,13 @@ let Song = function() {
     this.title;
     this.artist;
     this.language;
-    this.link = {};
-    this.genre = {};
-    this.date = {};
+    this.genre = [];
+    this.dates = [];
     // i have decided to make this an undirected graph.
-    this.links = {};
-    this.keywords = {};
+    this.linkedSongs = [];
+    this.links = [];
+    this.keywords = [];
+    this.closeness = -1;
 }
 
 // requires: a language
@@ -35,19 +36,122 @@ Song.prototype.getLanguage = function() {
     return this.language;
 }
 
-// requires: a link 
+// requires: a string
+// effects: adds genres to list 
+Song.prototype.addGenre = function(genres) {
+    let genreList = genres.split(',');
+    for (let i = 0; i < genreList.length; i++) {
+        let curr = genreList[i].trim();
+        let alreadyAdded = false;
+        console.log(curr);
+        for (let j = 0; j < this.genre.length; j++) {
+            
+            if (curr == this.genre[j]) {
+                alreadyAdded = true;
+            }   
+        }
+        if (alreadyAdded == false) {
+            this.genre.push(curr);
+        }
+    }
+}
+// checks if a given genre is listed under a song
+Song.prototype.searchGenres = function(testGenre) {
+    for (let i = 0; i < this.genre.length; i++) {
+        if (this.genre[i] == testGenre) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Song.prototype.getGenres = function() {
+    return this.genre.toString();
+}
+
+// requires: a string
+// effects: adds keywords to list 
+Song.prototype.addKeyword = function(newKeywords) {
+    let keywordList = newKeywords.split(',');
+    for (let i = 0; i < keywordList.length; i++) {
+        let curr = keywordList[i].trim();
+        let alreadyAdded = false;
+        console.log(curr);
+        for (let j = 0; j < keywords.length; j++) {
+            
+            if (curr == keywords[j]) {
+                alreadyAdded = true;
+            }   
+        }
+        if (alreadyAdded == false) {
+            this.keywords.push(curr);
+        }
+    }
+}
+
+// checks if a given keyword is listed under a song
+Song.prototype.searchKeywords = function(testKeyword) {
+    for (let i = 0; i < this.keywords.length; i++) {
+        if (this.keywords[i] == testKeyword) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+Song.prototype.getKeywords = function() {
+    return this.keywords.toString();
+}
+
+
+
+// requires: a date
+// effects: adds dates to list 
+Song.prototype.addDate = function(newDate) {
+    let alreadyAdded = false;
+    for (let i = 0; i < dates.length; i++) {
+        if (newDate == dates[i]) {
+            alreadyAdded = true;
+        }
+    }
+    if (alreadyAdded == false) {
+        this.dates.push(newDate);
+    }
+}
+
+Song.prototype.getDates = function() {
+    return this.dates.toString();
+}
+
+
+// checks if a given date is listed under a song
+Song.prototype.searchDates = function(testDate) {
+    for (let i = 0; i < this.dates.length; i++) {
+        if (this.dates[i] == testDate) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// requires: a link (but i won't check)
 // effects: adds to the list of links to it if it's not already in the list
 Song.prototype.addLink = function(newLink) {
     let alreadyIn = false;
-    for (let i = 0; i < this.link.length; i++) {
-        if (this.link[i] == newLink) {
+    for (let i = 0; i < this.links.length; i++) {
+        if (this.links[i] == newLink) {
             alreadyIn = true;
-            i = this.link.length;
+            i = this.links.length;
         }
     }
     if (alreadyIn == false) {
-        this.link.push(newLink);
+        this.links.push(newLink);
     }
+}
+
+Song.prototype.getLinks = function(newLink) {
+    return this.links.toString();
 }
 
 // setter
@@ -89,5 +193,30 @@ Song.prototype.sameSong2 = function(title2, artist2) {
     if (this.title == title2 && this.artist == artist2) {
         return true;
     }
-    return false;
+    return false
+    ;
+}
+
+Song.prototype.sameSong3 = function(link) {
+    for (let i = 0; i < this.links.length; i++) {
+        if (this.links[i] == link) {
+            return true;
+        }
+    }
+    return 3;
+}
+
+Song.prototype.addNewLinkedSong = function(newSong) {
+    this.linkedSongs.push(newSong);
+}
+
+Song.prototype.getLinkedSongs = function() {
+    return this.linkedSongs;
+}
+
+Song.prototype.getCloseness = function() {
+    return this.closeness;
+}
+Song.prototype.setCloseness = function(newCloseness) {
+    this.closeness = newCloseness;
 }
