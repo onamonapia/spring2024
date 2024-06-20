@@ -446,8 +446,7 @@ let fileManager = {
 
 
 let jsonToSong = function(json) {
-  let newSong = new Song();
-  newSong.id = json.id;
+  let newSong = new Song(json.id);
   newSong.title = json.title;
   newSong.artist = json.artist;
   newSong.genre = json.genre;
@@ -475,6 +474,7 @@ router.post("/addSong", function(req, res) {
   const newSongJSON = req.body;
   let newSong = new Song();
   newSong.id = newSongJSON.id;
+  console.log(newSong.id);
   newSong.title = newSongJSON.title;
   newSong.artist = newSongJSON.artist;
   newSong.genre = newSongJSON.genre;

@@ -1,5 +1,5 @@
 let clientSongs = [];
-let numberOfSongs = 0;
+
 
 document.addEventListener("DOMContentLoaded", function (event) {
     
@@ -116,21 +116,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $(document).on("pagebeforeshow", "#details", function (event) {
         let songID = localStorage.getItem("parm");
+        let curr;
         for (let i = 0; i < clientSongs.length; i++) {
             if (songID == clientSongs[i].id) {
                 curr = clientSongs[i];
-                document.getElementById("title").innerHTML = "Title: " + curr.title;
-                document.getElementById("artist").innerHTML = "Aritst: " + curr.artist;
-                document.getElementById("language").innerHTML = "Langauge: " + curr.language;
-                document.getElementById("link").innerHTML = "Links: " + curr.links.toString();
-                document.getElementById("dates").innerHTML = "Dates listened to: " + curr.dates.toString();
-                document.getElementById("links").innerHTML = "Songs linked: " + curr.linkedSongs.toString();
-                document.getElementById("genre").innerHTML = "Genres: " + curr.genre.toString();
-                document.getElementById("keywords").innerHTML = "Keywords: " + curr.keywords.toString();
-
+                console.log("CURRENT SONG: " + curr.title);
+                console.log("CURRENT GENRE: " + curr.genre.toString());
             }
 
         }
+        document.getElementById("title").innerHTML = "Title: " + curr.title;
+        document.getElementById("artist").innerHTML = "Aritst: " + curr.artist;
+        document.getElementById("language").innerHTML = "Langauge: " + curr.language;
+        document.getElementById("link").innerHTML = "Links: " + curr.links.toString();
+        document.getElementById("dates").innerHTML = "Dates listened to: " + curr.dates.toString();
+        document.getElementById("links").innerHTML = "Songs linked: " + curr.linkedSongs.toString();
+        document.getElementById("genre").innerHTML = "Genres: " + curr.genre.toString();
+        document.getElementById("keywords").innerHTML = "Keywords: " + curr.keywords.toString();
         
     });
 
@@ -138,7 +140,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 let createASong = function(currName, currArtist, currLang, currSongLink, currDateListened, currLinkedFrom, currGenre, currKeyword) {
-    let song = new Song(numberOfSongs);
+
+    let song = new Song(Math.random().toString(16));
     song.setTitleAndArtist(currName, currArtist);
     song.setLanguage(currLang);
     song.addDate(currDateListened);
@@ -146,7 +149,7 @@ let createASong = function(currName, currArtist, currLang, currSongLink, currDat
     song.addKeyword(currKeyword);
     song.addLink(currSongLink);
     song.addNewLinkedSong(currLinkedFrom);
-    numberOfSongs++;
+    
     // clientSongs.push(song);
 
     // send to server
@@ -290,7 +293,7 @@ function displaySongs3() {
 
     let lilist = document.getElementsByClassName("oneSong");
     let newSongArray = Array.from(lilist);
-    console.log("test");
+    // console.log("test");
     newSongArray.forEach(function (element, i) {
         
         element.addEventListener("click", function () {
