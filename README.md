@@ -1,6 +1,7 @@
   # Node.js Project
 
-## Everything relevant is in the spring2024 folder
+## Everything relevant is in the spring2024 folder, and it has to be run from inside that folder as well.
+### I don't know why it's all inside that secondary folder or what the things outside of it are, but I'm too scared to delete them 
 
 At least on my computer, the get/post are very laggy. It might take a few seconds for things to load, but they do eventually. Or, at least, I really hope they do.
 
