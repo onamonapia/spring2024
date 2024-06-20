@@ -11,11 +11,11 @@ let SongGraph = function() {
 SongGraph.prototype.addNode = function(newSong) {
     let alreadyIn = false;
     for (let i = 0; i < this.nodes.length; i++) {
-        if (this.nodes[i].sameSong(newSong)) {
-            this.nodes[i].addGenre[newSong.getGenres()];
-            this.nodes[i].addKeyword[newSong.getKeywords()];
-            this.nodes[i].addLink[newSong.getLinks()];
-            this.nodes[i].addDate[newSong.getDates()];
+        if (nodes[i].sameSong(newSong)) {
+            nodes[i].addGenre[newSong.getGenres()];
+            nodes[i].addKeyword[newSong.getKeywords()];
+            nodes[i].addLink[newSong.getLinks()];
+            nodes[i].addDate[newSong.getDates()];
             alreadyIn = true;
             i = this.nodes.length;
         }
@@ -23,7 +23,7 @@ SongGraph.prototype.addNode = function(newSong) {
     this.nodes.push(newSong);
     alreadyIn = false;
     for (let i = 0; i < this.languages.length; i++) {
-        if (this.languages[i] == newSong.getLanguage()) {
+        if (languages[i] == newSong.getLanguage()) {
             alreadyIn = true;
         }
     }
@@ -46,10 +46,10 @@ SongGraph.prototype.resetBfs = function() {
 
 // returns a graph of all songs in a language
 SongGraph.prototype.getSongsByLanguage = function(lang) {
-    let songsInLanguage = [];
+    let songsInLanguage = new SongGraph();
     for (let i = 0; i < this.nodes.length; i++) {
         if (nodes[i].getLanguage == lang) {
-            songsInLanguage.push(this.nodes[i]);
+            songsInLanguage.addNode(this.nodes[i]);
         }
     }
     return songsInLanguage;
@@ -60,7 +60,7 @@ SongGraph.prototype.getSongsByLanguage = function(lang) {
 // based off a link. 
 // HOWEVER. it returns a NEW graph of all the songs that are in it
 
-SongGraph.prototype.bfs = function(link) {
+SongGraph.prototype.bfs(link) = function() {
     let startNode;
     for (let i = 0; i < this.nodes.length; i++) {
         if (this.nodes[i].sameSong3(link)) {
@@ -98,7 +98,19 @@ SongGraph.prototype.findKeyword = function(keyword) {
     return returnGraph;
 }
 
-SongGraph.prototype.bfsFromAnotherSong = function(link) {
+SongGraph.prototype.findGenre = function(genre) {
+    let returnGraph = new SongGraph();
+    for (let i = 0; i < this.nodes.length; i++) {
+        if (this.nodes[i].searchGenres(genre)) {
+            returnGraph.push(this.nodes[i]);
+        }
+    }
+    return returnGraph;
+}
+
+
+// adds another link to the bfs.assumes bfs has already been run once
+SongGraph.prototype.bfsFromAnotherSong(link) = function() {
     let startNode;
     for (let i = 0; i < this.nodes.length; i++) {
         if (this.nodes[i].sameSong3(link)) {
@@ -114,7 +126,7 @@ SongGraph.prototype.bfsFromAnotherSong = function(link) {
     while (queue.length > 0) {
         let curr = queue.shift();
         for (let i = 0; i < curr.getLinkedSongs(); i++) {
-            if (curr.getLinkedSongs[i].getCloseness() == -1) {
+            if (curr.getLinkedSongs[i].getCloseness() == -1 || curr.getLinkedSongs[i].getCloseness() > curr.getCloseness() + 1) {
                 curr.getLinkedSongs[i].setCloseness(curr.getCloseness() + 1);
                 queue.push(curr.getLinkedSongs[i]);
                 returnGraph.addNode(curr.getLinkedSongs[i]);

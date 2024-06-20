@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+
+    
   </head>
   <body>
 
@@ -55,45 +58,47 @@
       <div data-role="content">
         <!-- need title, artist, language, youtube link, genre, date listened to, linked from, keywords -->
         <!-- javascript will decide if the majority of these are required -->
-        <div class="input">
-          <label for="songName">Song Name:</label>
-          <input type="text" id="songName" name="songName"><br>
-        </div>
-        <div class="input">
-          <label for="artistName">Artist:</label>
-          <input type="text" id="artistName" name="artistName"><br>
-        </div>
-        <!-- In the future, I may decide to make this a drop-down using Javascript if I can find a list of languages. -->
-        <!-- or maybe not because that drop-down menu would be really long and obnoxious to sort through. will see -->
-        <div class="input">
-          <label for="songLanguage">Language:</label>
-          <input type="text" id="songLanguage" name="songLanguage"><br>
-        </div>
+        <form action="index/addSong" method="POST">
+          <div class="input">
+            <label for="songName">Song Name:</label>
+            <input type="text" id="songName" name="songName"><br>
+          </div>
+          <div class="input">
+            <label for="artistName">Artist:</label>
+            <input type="text" id="artistName" name="artistName"><br>
+          </div>
+          <!-- In the future, I may decide to make this a drop-down using Javascript if I can find a list of languages. -->
+          <!-- or maybe not because that drop-down menu would be really long and obnoxious to sort through. will see -->
+          <div class="input">
+            <label for="songLanguage">Language:</label>
+            <input type="text" id="songLanguage" name="songLanguage"><br>
+          </div>
 
-        <!-- Always required -->
-        <div class="input">
-          <label for="songLink">Youtube Link:</label>
-          <input type="url" id="songLink" name="songLink" required><br>
-        </div>
-        <div class="input">
-          <label for="dateListened">Date:</label>
-          <input type="date" id="dateListened" name="dateListened" required><br>
-        </div>
+          <!-- Always required -->
+          <div class="input">
+            <label for="songLink">Youtube Link:</label>
+            <input type="text" id="songLink" name="songLink" required><br>
+          </div>
+          <div class="input">
+            <label for="dateListened">Date:</label>
+            <input type="date" id="dateListened" name="dateListened" required><br>
+          </div>
 
-        <div class="input">
-          <label for="linkedFrom">Linked from:</label>
-          <input type="url" id="linkedFrom" name="linkedFrom"><br>
-        </div>
+          <div class="input">
+            <label for="linkedFrom">Linked from:</label>
+            <input type="text" id="linkedFrom" name="linkedFrom"><br>
+          </div>
 
-        <!-- never required -->
-        <div class="input">
-          <label for="songGenre">Genre:</label>
-          <input type="text" id="songGenre" name="songGenre"><br>
-        </div>
-        <div class="input">
-          <label for="keywordList">Keywords (separated by commas):</label>
-          <input type="text" id="keywordList" name="keywordList"><br>
-        </div>
+          <!-- never required -->
+          <div class="input">
+            <label for="songGenre">Genre:</label>
+            <input type="text" id="songGenre" name="songGenre"><br>
+          </div>
+          <div class="input">
+            <label for="keywordList">Keywords (separated by commas):</label>
+            <input type="text" id="keywordList" name="keywordList"><br>
+          </div>
+        </form>
 
         <button id="enter" type="button">Enter</button>
 
@@ -121,7 +126,7 @@
       <div data-role="content">
          <div id="showDiv">
           <ul id="showList">
-            <li><a href="#details">filler</a></li>
+            <li><a href="#details"></a></li>
           </ul>
         </div>
       </div>
@@ -146,14 +151,14 @@
       <div data-role="content">
         <!-- will likely change when javascript gets involved -->
         <div id="detailDiv">
-          <h2>Title:</h2>
-          <h2>Language:</h2>
-          <h2>Links:</h2>
-          <h2>Dates listened to:</h2>
-          <h2>Linked from:</h2>
-          <h2>Links to:</h2>
-          <h2>Genre:</h2>
-          <h2>Keywords:</h2>
+          <h2 id="title"></h2>
+          <h2 id="artist"></h2>
+          <h2 id="language"></h2>
+          <h2 id="link"></h2>
+          <h2 id="dates"></h2>
+          <h2 id="links"></h2>
+          <h2 id="genre"></h2>
+          <h2 id="keywords"></h2>
         </div>
       </div>
       <div data-role="footer">
@@ -211,7 +216,7 @@
         <div id="possibleSongs">
           <h2>Possible Songs</h2>
           <ul id="possibleList">
-            <li>filler</li>
+            <li></li>
           </ul>
         </div>
         
@@ -226,5 +231,8 @@
 
   <script src="javascripts/Song.js"></script>
   <script src="javascripts/SongTest.js"></script>
+  <script src="javascripts/SongGraph.js"></script>
+  <script src="javascripts/index.js"></script>
+  <!-- <script src="../../routes/index.js" type="text/javascript"></script> -->
 
 </html>

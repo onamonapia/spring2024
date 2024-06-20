@@ -11,11 +11,11 @@ let SongGraph = function() {
 SongGraph.prototype.addNode = function(newSong) {
     let alreadyIn = false;
     for (let i = 0; i < this.nodes.length; i++) {
-        if (this.nodes[i].sameSong(newSong)) {
-            this.nodes[i].addGenre[newSong.getGenres()];
-            this.nodes[i].addKeyword[newSong.getKeywords()];
-            this.nodes[i].addLink[newSong.getLinks()];
-            this.nodes[i].addDate[newSong.getDates()];
+        if (nodes[i].sameSong(newSong)) {
+            nodes[i].addGenre[newSong.getGenres()];
+            nodes[i].addKeyword[newSong.getKeywords()];
+            nodes[i].addLink[newSong.getLinks()];
+            nodes[i].addDate[newSong.getDates()];
             alreadyIn = true;
             i = this.nodes.length;
         }
@@ -23,7 +23,7 @@ SongGraph.prototype.addNode = function(newSong) {
     this.nodes.push(newSong);
     alreadyIn = false;
     for (let i = 0; i < this.languages.length; i++) {
-        if (this.languages[i] == newSong.getLanguage()) {
+        if (languages[i] == newSong.getLanguage()) {
             alreadyIn = true;
         }
     }

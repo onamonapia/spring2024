@@ -4,7 +4,7 @@
 // Effects: creates a new song object.
 //title, artist, language, youtube link, genre, date listened to, linked from, keywords
 let Song = function(id) {
-    this.id = id;
+    this.id =
     this.title;
     this.artist;
     this.language;
@@ -17,19 +17,18 @@ let Song = function(id) {
     this.closeness = -1;
 }
 
-Song.prototype.toString = function() {
-    return this.title + " by " + this.artist + " (" + this.language + ")";
-}
-
 // requires: a language
 // effects: adds the language to this song
 // throws: error if the song already has a language
 // (i dont know what to do if a song has multiple languages)
 // (it'll just be the majority language i guess)
 Song.prototype.setLanguage = function(lang) {
-
+    if (this.language == null) {
+        throw "song already has a language";
+    }
+    else {
         this.language = lang;
-
+    }
 }
 
 // returns: the language of this song
@@ -78,9 +77,9 @@ Song.prototype.addKeyword = function(newKeywords) {
         let curr = keywordList[i].trim();
         let alreadyAdded = false;
         console.log(curr);
-        for (let j = 0; j < this.keywords.length; j++) {
+        for (let j = 0; j < keywords.length; j++) {
             
-            if (curr == this.keywords[j]) {
+            if (curr == keywords[j]) {
                 alreadyAdded = true;
             }   
         }
@@ -111,8 +110,8 @@ Song.prototype.getKeywords = function() {
 // effects: adds dates to list 
 Song.prototype.addDate = function(newDate) {
     let alreadyAdded = false;
-    for (let i = 0; i < this.dates.length; i++) {
-        if (newDate == this.dates[i]) {
+    for (let i = 0; i < dates.length; i++) {
+        if (newDate == dates[i]) {
             alreadyAdded = true;
         }
     }
