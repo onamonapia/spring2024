@@ -20,10 +20,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.getElementById("languageEnter").addEventListener("click", function() {
         // send to server
+        let lang = "{\"lang\": \"" + document.getElementById("findLanguage").value + "\"}";
+        //console.log(lang);
         $.ajax({
-            url: "/addSong",
+            url: "/sendLanguage",
             type: "POST",
-            data: JSON.stringify(document.getElementById("findLanguage").value),
+            data: lang,
+            
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(result) {
@@ -34,7 +37,69 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         displaySongs3();
     });
+
+    document.getElementById("keywordEnter").addEventListener("click", function() {
+        // send to server
+        let keyword = "{\"keyword\": \"" + document.getElementById("findKeywords").value + "\"}";
+        console.log(keyword);
+        $.ajax({
+            url: "/sendKeyword",
+            type: "POST",
+            data: keyword,
+            
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result) {
+                console.log(result);
+                // console.log(JSON.stringify(song));
+            }
+        });
+
+        displaySongs3();
+    });
     
+
+    document.getElementById("genreEnter").addEventListener("click", function() {
+        // send to server
+        let genre = "{\"genre\": \"" + document.getElementById("findGenre").value + "\"}";
+        console.log(genre);
+        $.ajax({
+            url: "/sendGenre",
+            type: "POST",
+            data: genre,
+            
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result) {
+                console.log(result);
+                // console.log(JSON.stringify(song));
+            }
+        });
+
+        displaySongs3();
+    });
+
+    // document.getElementById("linkedEnter").addEventListener("click", function() {
+    //     // send to server
+    //     let genre = "{\"linked\": \"" + document.getElementById("findLink").value + "\"}";
+    //     console.log(genre);
+    //     $.ajax({
+    //         url: "/sendLinked",
+    //         type: "POST",
+    //         data: genre,
+            
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: function(result) {
+    //             console.log(result);
+    //             // console.log(JSON.stringify(song));
+    //         }
+    //     });
+
+    //     displaySongs3();
+    // });
+
+
 
     $(document).on("pagebeforeshow", "#show", function (event) {
         let showList = document.getElementById("showList");
@@ -53,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         let songID = localStorage.getItem("parm");
         for (let i = 0; i < clientSongs.length; i++) {
             if (songID == clientSongs[i].id) {
-                let curr = clientSongs[i];
+                curr = clientSongs[i];
                 document.getElementById("title").innerHTML = "Title: " + curr.title;
                 document.getElementById("artist").innerHTML = "Aritst: " + curr.artist;
                 document.getElementById("language").innerHTML = "Langauge: " + curr.language;
@@ -115,6 +180,14 @@ let createASong = function(currName, currArtist, currLang, currSongLink, currDat
 function displaySongs() {
     let showList = document.getElementById("showList");
     showList.innerHTML = "";
+    document.getElementById("songName").value = "";
+    document.getElementById("artistName").value = "";
+    document.getElementById("songLanguage").value = "";
+    document.getElementById("songLink").value = "";
+    document.getElementById("dateListened").value = "";
+    document.getElementById("linkedFrom").value = "";
+    document.getElementById("songGenre").value = "";
+    document.getElementById("keywordList").value = "";
     
     $.get("/getSongs", function(data, status) {
         console.log(status);
@@ -124,7 +197,7 @@ function displaySongs() {
 
 
     for (let i = 0; i < clientSongs.length; i++ ) {
-  
+        console.log(clientSongs[i].keywords.toString());
         let item = document.createElement("li");
         item.classList.add("oneSong");
         item.textContent = clientSongs[i].title + " by " + clientSongs[i].artist + " (" + clientSongs[i].language + ")";
@@ -148,7 +221,14 @@ function displaySongs() {
 }
 
 function displaySongs2() {
-
+    document.getElementById("songName").value = "";
+    document.getElementById("artistName").value = "";
+    document.getElementById("songLanguage").value = "";
+    document.getElementById("songLink").value = "";
+    document.getElementById("dateListened").value = "";
+    document.getElementById("linkedFrom").value = "";
+    document.getElementById("songGenre").value = "";
+    document.getElementById("keywordList").value = "";
     $.get("/getSongs", function(data, status) {
         console.log(status);
         clientSongs = data;
@@ -182,7 +262,15 @@ function displaySongs2() {
 }
 
 function displaySongs3() {
-
+    //console.log("DISPLAY SONGS 3");
+    document.getElementById("songName").value = "";
+    document.getElementById("artistName").value = "";
+    document.getElementById("songLanguage").value = "";
+    document.getElementById("songLink").value = "";
+    document.getElementById("dateListened").value = "";
+    document.getElementById("linkedFrom").value = "";
+    document.getElementById("songGenre").value = "";
+    document.getElementById("keywordList").value = "";
     $.get("/getPossibleSongs", function(data, status) {
         console.log(status);
         clientSongs = data;

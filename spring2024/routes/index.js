@@ -94,7 +94,7 @@ Song.prototype.getGenres = function() {
 // requires: a string
 // effects: adds keywords to list 
 Song.prototype.addKeyword = function(newKeywords) {
-  let keywordList = newKeywords.split(',');
+  let keywordList = String(newKeywords).split(',');
   for (let i = 0; i < keywordList.length; i++) {
       let curr = keywordList[i].trim();
       let alreadyAdded = false;
@@ -120,6 +120,25 @@ Song.prototype.searchKeywords = function(testKeyword) {
   }
   return false;
 }
+
+Song.prototype.searchGenres = function(testGenre) {
+  for (let i = 0; i < this.genre.length; i++) {
+      if (this.genre[i] == testGenre) {
+          return true;
+      }
+  }
+  return false;
+}
+
+Song.prototype.searchLinked = function(linked) {
+  for (let i = 0; i < this.linkedSongs.length; i++) {
+      if (this.linkedSongs[i] == linked) {
+          return true;
+      }
+  }
+  return false;
+}
+
 
 
 Song.prototype.getKeywords = function() {
@@ -289,14 +308,34 @@ SongGraph.prototype.resetBfs = function() {
   }
 }
 
+SongGraph.prototype.getSongsByKeyword = function(keyword) {
+  //console.log("input language: " + lang);
+  let temp = new SongGraph();
+  for (let i = 0; i < this.nodes.length; i++) {
+    console.log("current keywords: " + this.nodes[i].getKeywords().toString());
+    for (let j = 0; j < this.nodes[i].getKeywords(); j++) {
+      if (keyword == this.nodes[i].getKeywords()[j]) {
+        temp.nodes.push(this.nodes[i]);
+      }
+    }
+  }
+  // console.log(songsInLanguage.nodes[0].getTitleAndArtist());
+  return temp;
+}
+
 // returns a graph of all songs in a language
 SongGraph.prototype.getSongsByLanguage = function(lang) {
+  console.log("input language: " + lang);
   let songsInLanguage = new SongGraph();
   for (let i = 0; i < this.nodes.length; i++) {
-      if (nodes[i].getLanguage == lang) {
-          songsInLanguage.addNode(this.nodes[i]);
+    console.log("current language: " + this.nodes[i].getLanguage());
+      if (this.nodes[i].getLanguage() == lang) {
+          console.log("YES");
+          songsInLanguage.nodes.push(this.nodes[i]);
+          
       }
   }
+  console.log(songsInLanguage.nodes[0].getTitleAndArtist());
   return songsInLanguage;
 }
 
@@ -371,7 +410,7 @@ SongGraph.prototype.bfsFromAnotherSong = function(link) {
 
 
 let serverSongs = new SongGraph();
-let currGraph = new SongGraph();
+let currGraph = serverSongs;
 let jsonArray = [];
 
 var fs = require("fs");
@@ -380,7 +419,7 @@ let fileManager = {
     var rawdata = fs.readFileSync("objectdata.json");
     let gooddata = JSON.parse(rawdata);
     
-
+    console.log("SAVED SONGS: " + gooddata.nodes.length);
     for (let i = 0; i < gooddata.nodes.length; i++) {
       serverSongs.addNode(jsonToSong(gooddata.nodes[i]));
     }
@@ -417,6 +456,7 @@ let jsonToSong = function(json) {
   newSong.links = json.links;
   newSong.linkedSongs = json.linkedSongs;
   newSong.dates = json.dates;
+  newSong.keywords = json.keywords;
   return newSong;
 }
 
@@ -443,15 +483,84 @@ router.post("/addSong", function(req, res) {
   newSong.links = newSongJSON.links;
   newSong.linkedSongs = newSongJSON.linkedSongs;
   newSong.dates = newSongJSON.dates;
+  newSong.keywords = newSongJSON.keywords;
   serverSongs.addNode(newSong);
   fileManager.write();
   res.status(200).json(newSong);
 });
 
+
+// WORKS
 router.post("/sendLanguage", function(req, res) {
-  let lang = req.body;
-  currGraph = serverSongs.getSongsByLanguage();
+  console.log(serverSongs.nodes.length);
+  let lang = req.body.lang;
+  console.log(lang);
+ 
+  currGraph = serverSongs.getSongsByLanguage(lang);
+  
+  //console.log(currGraph.nodes[0].getLanguage());
 });
+
+router.post("/sendKeyword", function(req, res) {
+
+  //console.log(serverSongs.nodes.length);
+  console.log("TEMP GRAPH SIZE: " + currGraph.nodes.length);
+  let keyword = req.body.keyword;
+  console.log("keyword: " + keyword);
+  let tempGraph = new SongGraph();
+  for (let i = 0; i < serverSongs.nodes.length; i++) {
+    console.log("Current keywords: " + serverSongs.nodes[i].keywords.toString());
+    if (serverSongs.nodes[i].searchKeywords(keyword) == true ) {
+      tempGraph.nodes.push(serverSongs.nodes[i]);
+    }
+  }
+  
+
+  currGraph = tempGraph;
+  
+  //console.log(currGraph.nodes[0].getLanguage());
+});
+
+
+router.post("/sendGenre", function(req, res) {
+
+  //console.log(serverSongs.nodes.length);
+  console.log("TEMP GRAPH SIZE: " + currGraph.nodes.length);
+  let genre = req.body.genre;
+  console.log("genre: " + genre);
+  let tempGraph = new SongGraph();
+  for (let i = 0; i < serverSongs.nodes.length; i++) {
+    //console.log("Current genres: " + serverSongs.nodes[i].genres.toString());
+    if (serverSongs.nodes[i].searchGenres(genre) == true ) {
+      tempGraph.nodes.push(serverSongs.nodes[i]);
+    }
+  }
+  
+
+  currGraph = tempGraph;
+  
+  //console.log(currGraph.nodes[0].getLanguage());
+});
+
+// router.post("/sendLinked", function(req, res) {
+
+//   //console.log(serverSongs.nodes.length);
+//   //console.log("TEMP GRAPH SIZE: " + currGraph.nodes.length);
+//   let linked = req.body.linked;
+//   //console.log("genre: " + genre);
+//   let tempGraph = new SongGraph();
+//   for (let i = 0; i < serverSongs.nodes.length; i++) {
+//     //console.log("Current genres: " + serverSongs.nodes[i].genres.toString());
+//     if (serverSongs.nodes[i].searchLinked(linked) == true ) {
+//       tempGraph.nodes.push(serverSongs.nodes[i]);
+//     }
+//   }
+  
+
+//   currGraph = tempGraph;
+  
+//   //console.log(currGraph.nodes[0].getLanguage());
+// });
 
 
 
